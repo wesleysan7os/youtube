@@ -9,10 +9,7 @@ const URL_BASE = "https://www.googleapis.com/youtube/v3/";
 
 class Api {
 
-  pesquisar(String pesquisa) async {
-
-    // http://example.org/path?q=dart.
-    /// Uri.http("example.org", "/path", { "q" : "dart" });
+  Future<List<Video>> pesquisar(String pesquisa) async {
 
     http.Response response = await http.get(Uri.https(
      "www.googleapis.com",      //authority
@@ -24,33 +21,19 @@ class Api {
         "part" : "snippet",
         "order" : "date",
         "type" : "video",
-
         "q" : pesquisa
       }
     ));
 
+    Map<String, dynamic> dadosJson = json.decode( response.body );
+    List<Video> videos = dadosJson["items"].map<Video>(
+        (map){
+          //return Video.converterJson(map);
+          return Video.fromJson(map);
+        }
+    ).toList();
 
-    if( response.statusCode == 200 ){
-      Map<String, dynamic> dadosJson = json.decode( response.body );
-      List<Video> videos = dadosJson["items"].map<Video>(
-          (map){
-            //return Video.converterJson(map);
-            return Video.fromJson(map);
-          }
-      ).toList();
-
-      for (var video in videos){
-        print("resultado: " + video.titulo);
-      }
-
-      // print("resultado: " + dadosJson["items"][2]["snippet"]["title"].toString() );
-      //print("resultado: " + dadosJson["pageInfo"]["resultsPerPage"].toString());
-      //print("resultado: " + dadosJson["items"].toString());
-    }else{
-
-    }
-
-
+    return videos;
   }
 }
 

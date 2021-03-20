@@ -41,7 +41,10 @@ class _HomeState extends State<Home> {
           color: Colors.grey
         ),
       ),
-      body: telas[_indiceAtual],
+      body: Container(
+        padding: EdgeInsets.all(16),
+        child: telas[_indiceAtual],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         fixedColor: Colors.red,
