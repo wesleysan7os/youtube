@@ -23,7 +23,7 @@ class _InicioState extends State<Inicio> {
       future: _listarVideos(),
       builder: (context, snapshot) {
         switch( snapshot.connectionState ){
-          // ignore: missing_return
+
           case ConnectionState.none :
 
           case ConnectionState.waiting :
@@ -32,39 +32,36 @@ class _InicioState extends State<Inicio> {
             );
             break;
 
-          // ignore: missing_return
           case ConnectionState.active :
 
           case ConnectionState.done :
-          if( snapshot.hasData ){
-            return ListView.separated(
-              itemBuilder: (context, index){
-                List<Video> videos = snapshot.data;
-                Video video = videos[ index ];
-
-                return Column(
-                  children: <Widget>[
-                    Container(
-                      height: 200,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage( video.imagem )
-                        )
+            if( snapshot.hasData ){
+              return ListView.separated(
+                itemBuilder: (context, index){
+                  List<Video> videos = snapshot.data;
+                  Video video = videos[ index ];
+                  return Column(
+                    children: <Widget>[
+                      Container(
+                        height: 200,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage( video.imagem )
+                          )
+                        ),
                       ),
-                    ),
-                    ListTile(
-                      title: Text( video.titulo ),
-                      subtitle: Text( video.canal ),
-                    )
-                  ],
-                );
-
+                      ListTile(
+                        title: Text( video.titulo ),
+                        subtitle: Text( video.canal ),
+                      )
+                    ],
+                  );
               },
-                separatorBuilder: (context, index) => Divider(
-                  height: 2,
-                  color: Colors.grey,
-                ),
+              separatorBuilder: (context, index) => Divider(
+                height: 2,
+                color: Colors.grey,
+              ),
                 itemCount: snapshot.data.length
             );
 
@@ -74,6 +71,8 @@ class _InicioState extends State<Inicio> {
             );
           }
             break;
+          default:
+            return Container();
         }
       },
     );

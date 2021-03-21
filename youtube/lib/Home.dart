@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:youtube/CustomSearchDelegate.dart';
 import 'package:youtube/EmAlta.dart';
 import 'package:youtube/Inscricao.dart';
 import 'Biblioteca.dart';
@@ -32,9 +33,14 @@ class _HomeState extends State<Home> {
         ),
         //leading: Image.asset("images/youtube.png"),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.videocam), onPressed: (){}),
-          IconButton(icon: Icon(Icons.search), onPressed: (){}),
-          IconButton(icon: Icon(Icons.account_circle), onPressed: (){})
+          IconButton(
+            icon: Icon(Icons.search), 
+            onPressed: () async {
+              String res = await showSearch(context: context, delegate: CustomSearchDelegate());
+            }),
+          // IconButton(icon: Icon(Icons.videocam), onPressed: (){}),
+          // IconButton(icon: Icon(Icons.search), onPressed: (){}),
+          // IconButton(icon: Icon(Icons.account_circle), onPressed: (){})
         ],
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(
